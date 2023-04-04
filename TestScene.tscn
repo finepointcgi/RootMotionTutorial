@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2bv7fp2atbbj"]
+
+[ext_resource type="PackedScene" uid="uid://blnxmfxmu2adl" path="res://character.tscn" id="1_rveg4"]
+[ext_resource type="Script" path="res://CameraController.gd" id="2_tmwim"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b2mux"]
+size = Vector3(19.0473, 0.130315, 20.2607)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mh0nq"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.520969, 0)
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50069, 0)
+shape = SubResource("BoxShape3D_b2mux")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(19.0121, 0, 0, 0, 0.107004, 0, 0, 0, 19.754, 0, 0.465224, 0)
+mesh = SubResource("BoxMesh_mh0nq")
+skeleton = NodePath("../..")
+
+[node name="Character" parent="." groups=["Character"] instance=ExtResource("1_rveg4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.425341, 0)
+
+[node name="Node3D" type="Node3D" parent="." groups=["CameraController"]]
+script = ExtResource("2_tmwim")
+
+[node name="LookAt" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00417161, 1.59444, 35.0376)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00417161, 1.59444, -0.012542)
+collision_mask = 4
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="Node3D/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.14722)
